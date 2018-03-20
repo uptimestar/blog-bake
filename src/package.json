@@ -1,0 +1,19 @@
+{
+  "name": "blog-bake",
+  "version": "1.0.0",
+  "description": "ts-node",
+  "main": "bake.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uptimestar/blog-bake.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uptimestar/blog-bake/issues"
+  },
+  "homepage": "https://github.com/uptimestar/blog-bake#readme"
+}
