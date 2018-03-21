@@ -1,11 +1,17 @@
 {
-  "name": "blog-bake",
+  "name": "bake-cli",
   "version": "1.0.0",
-  "description": "ts-node",
+  "description": "Bake a pug",
   "main": "index.ts",
+  "preferGlobal": true,
   "bin": {
     "bake": "./index.ts",
     "bake-cli": "./index.ts"
+  },
+  "scripts": {
+    "ts-node": "ts-node index.ts",
+    "build": "tsc",
+    "watch": "tsc -w"
   },
   "homepage": "https://github.com/uptimestar/blog-bake#readme",
   "dependencies": {
