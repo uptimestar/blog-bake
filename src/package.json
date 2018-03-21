@@ -18,7 +18,8 @@
     "filehound": "^1.16.2",
     "mkdirp": "^0.5.1",
     "properties-reader": "0.0.16",
-    "pug": "^2.0.2"
+    "pug": "^2.0.2",
+    "tracer": "^0.8.12"
   },
   "private": true
 }
