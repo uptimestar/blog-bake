@@ -1,1 +1,1 @@
-ts-node index.ts
+npm run ts-node
