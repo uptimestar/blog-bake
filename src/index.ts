@@ -5,13 +5,13 @@ declare var __dirname: any
 
 // http://codeburst.io/how-to-build-a-command-line-app-in-node-js-using-typescript-google-cloud-functions-and-firebase-4c13b1699a27
 
-var program = require('commander')
-var fs = require('fs')
-var path = require('path')
-//var mkdirp = require('mkdirp')
-var pug = require('pug')
-var PropertiesReader = require('properties-reader')
-
+const program = require('commander')
+const fs = require('fs')
+const path = require('path')
+//const mkdirp = require('mkdirp')
+const pug = require('pug')
+const PropertiesReader = require('properties-reader')
+const FileHound = require('filehound')
 
 // ////////////////////////////////////////////////////////////////////////////////////////////////////
 const  basename = path.basename
@@ -22,9 +22,7 @@ const  normalize = path.normalize
 const  join = path.join
 const  relative = path.relative
 
-// //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+// args //////////////////////////////////////////////////////////////////////////////////////////////////////
 program
   .option('-s', 'Remove sauce')
   .parse(process.argv);
@@ -33,13 +31,13 @@ console.log('you ordered a pizza')
 if (program.sauce) console.log('  with sauce')
 else console.log(' without sauce')
 
-// ///////////////////////////////////////////////////////////////////////////////////////////
-console.log(__dirname)
-var props = PropertiesReader('../blog/one/meta.info')
-console.log(props.get('rootDir'))
-console.log(props.get('title'))
+// tree ///////////////////////////////////////////////////////////////////////////////////////////////////
+const jsonFiles = FileHound.create()
+  .paths('/tmp')
+  .ext('json')
+  .findSync()
 
-
+// props ///////////////////////////////////////////////////////////////////////////////////////////////////
 class Props {
 	props: any
 	path:string
@@ -47,18 +45,35 @@ class Props {
 		console.log(path)
 		this.path = path
 		this.props = PropertiesReader(path)
+		//console.log(this.props.getAllProperties())
+		if(!this.exists()) throw new Error('props file error')
+	}
+	exists():boolean {
+		var count = this.props.length
+		if(count>0) return true
+		return false
 	}
 	getRoot():string {
 		let r:string = props.get('root')
+		console.log(r)
 		//all the cases ./..
-		if(r=='.') return path
+		if(r=='.') return this.path
 
 		return r
 	}
 	getTitle():string {
-		return props.get('title')
+		return this.props.get('title')
 	}
-
-
+	get(prop:string) {
+		return this.props.get(prop)
+	}
 }
+
+console.log(__dirname)
+let props = new Props('../blog/one/meta.info')
+props.getRoot()
+console.log(props.getRoot())
+
+// pug /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
