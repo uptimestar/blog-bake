@@ -2,18 +2,15 @@
   "name": "blog-bake",
   "version": "1.0.0",
   "description": "ts-node",
-  "main": "bake.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "index.ts",
+  "bin": {
+    "bake": "./index.ts",
+    "bake-cli": "./index.ts"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/uptimestar/blog-bake.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/uptimestar/blog-bake/issues"
-  },
-  "homepage": "https://github.com/uptimestar/blog-bake#readme"
+  "homepage": "https://github.com/uptimestar/blog-bake#readme",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "mkdirp": "^0.5.1",
+    "pug": "^2.0.2"
+  }
 }

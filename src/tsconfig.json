@@ -3,9 +3,12 @@
         "module": "commonjs",
         "esModuleInterop": true,
         "target": "es6",
+        "lib": [
+            "es2017","es2015","dom","es6"
+           ],
         "noImplicitAny": true,
         "moduleResolution": "node",
-        "sourceMap": true,
+        "sourceMap": false,
         "outDir": "dist",
         "baseUrl": ".",
         "paths": {

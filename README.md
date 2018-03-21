@@ -1,3 +1,3 @@
-# blog-bake
+# blog-bake-cli
 
 ts-node
