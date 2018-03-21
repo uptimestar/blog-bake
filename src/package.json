@@ -16,6 +16,8 @@
   "dependencies": {
     "commander": "^2.15.1",
     "filehound": "^1.16.2",
+    "jstransformer": "^1.0.0",
+    "jstransformer-marked": "^1.0.3",
     "mkdirp": "^0.5.1",
     "properties-reader": "0.0.16",
     "pug": "^2.0.2",

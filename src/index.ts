@@ -55,7 +55,7 @@ class Props {
 		return false
 	}
 	getRoot():string {
-		let r:string = props.get('root')
+		let r:string = props.get('basedir')
 		logger.trace(r)
 		//all the cases ./..
 		if(r=='.') return this.path
@@ -87,6 +87,8 @@ logger.trace(props.getRoot())
 
 let o = props.getAll()
 //logger.trace(o)
+
+//markdown
 
 let index = pug.renderFile('../blog/one/index.pug',
 	o
