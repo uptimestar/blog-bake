@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="lib">
+  <library name="topseed4j">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/api/lib/topseed4j.jar!/" />
     </CLASSES>
