@@ -1,8 +1,11 @@
 
 node_modules/
+**/*lock.json
 
 dist/
-
 out/
+workspace.xml
 
-**/*lock.json
+
+**/*.log
+
