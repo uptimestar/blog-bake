@@ -11,9 +11,6 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.info.rpc.EMsg;
 import org.info.rpc.J;
-import org.jbake.app.Parser;
-import org.jbake.parser.MarkupEngine;
-import org.jbake.parser.ParserContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,10 +39,16 @@ public class Item {
 		return J.toJ(m);
 	}
 
+	/**
+	 * Read a meta info file
+	 * @param f
+	 * @return
+	 * @throws Throwable
+	 */
 	public static Map read(File f) throws Throwable {
 		LOGGER.info(f.toString());
-		Parser p = new Parser(FProps.CONFIG, FProps.CONTENT_DR);
-		Map<String, Object> item = p.processFile(f);
+
+		Map<String, Object> item = new HashMap();
 
 		Date d = (Date) item.get("date");
 		item.put("date", d.getTime());//as long
@@ -53,8 +56,6 @@ public class Item {
 		String joined = String.join(",", tags);
 		item.put("tags", joined);
 
-		ParserContext ctx = (ParserContext) item.get(FProps.CTX);
-		item.remove(FProps.CTX);
 		return item;
 	}
 
@@ -71,7 +72,6 @@ public class Item {
 		add(txt, "type", type);
 		add(txt, "tags", tags);
 		add(txt, "status", status);
-		addMarker(txt);
 		txt.append(body);
 
 		FileUtils.writeStringToFile(f, txt.toString(), StandardCharsets.UTF_8);
@@ -82,10 +82,6 @@ public class Item {
 		frm.append(key + "=" + val + "\n");
 	}
 
-	protected static void addMarker(StringBuilder frm) {
-		frm.append(MarkupEngine.HEADER_SEPARATOR);
-		frm.append("\n");
-		frm.append("\n");
-	}//()
+
 
 }//class
