@@ -1,5 +1,12 @@
 package org.bake.file.util;
 
+import org.apache.commons.io.FileUtils;
+import org.info.rpc.EMsg;
+import org.info.rpc.J;
+import org.info.util.Confd;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
@@ -8,22 +15,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-import org.info.rpc.EMsg;
-import org.info.rpc.J;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
-title=Second Post
-date=2013-08-25
-type=post
-tags=blog
-status=published
-~~~~~~
+ * title=Second Post
+ * date=2013-08-25
+ * type=post
+ * tags=blog
+ * status=published
+ * ~~~~~~
  */
 public class Item {
 
+	public static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	private static final Logger LOGGER = LoggerFactory.getLogger(Item.class);
 
 	public static String readJs(String path) {
@@ -41,28 +43,31 @@ public class Item {
 
 	/**
 	 * Read a meta info file
+	 *
 	 * @param f
 	 * @return
 	 * @throws Throwable
 	 */
 	public static Map read(File f) throws Throwable {
 		LOGGER.info(f.toString());
+		String fn = "";
 
-		Map<String, Object> item = new HashMap();
+		var item = Confd.loadProps(fn);
 
-		Date d = (Date) item.get("date");
-		item.put("date", d.getTime());//as long
-		String[] tags = (String[]) item.get("tags");
-		String joined = String.join(",", tags);
-		item.put("tags", joined);
-
+		if (item.containsKey("date")) {
+			Date d = (Date) item.get("date");
+			item.put("date", d.getTime());//as long
+		}
+		if (item.containsKey("tags")) {
+			String[] tags = (String[]) item.get("tags");
+			String joined = String.join(",", tags);
+			item.put("tags", joined);
+		}
 		return item;
 	}
 
-	public static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
 	public static Map write(File f, Date dat, String title, String type, String tags, String status, String body)
-			throws Throwable {
+		throws Throwable {
 
 		String date = df.format(dat);
 
@@ -81,7 +86,6 @@ public class Item {
 	protected static void add(StringBuilder frm, String key, String val) {
 		frm.append(key + "=" + val + "\n");
 	}
-
 
 
 }//class

@@ -1,23 +1,40 @@
 package org.bake.file.util;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
+import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.io.Files;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class ItemsDir {
 
+	public static final String ITEM = "item";
 	private static final Logger LOGGER = LoggerFactory.getLogger(ItemsDir.class);
+
+	/**
+	 * Starting w/ root, list recursive dirs that contain both meta.info and index.pug
+	 *
+	 * @param basedir
+	 * @return
+	 */
+	public static Collection<File> fileList(String basedir) {
+		Collection<File> lst;
+		File dir = null;
+		try {
+			lst = FileUtils.listFiles(dir, null, true);
+		} catch (Throwable e) {
+			LOGGER.warn(e.toString());
+			return new ArrayList();
+		}
+		return lst;
+	}
 
 	protected static Collection<File> listFiles() {
 		Collection<File> lst;
@@ -30,8 +47,6 @@ public class ItemsDir {
 		}
 		return lst;
 	}
-
-	public static final String ITEM = "item";
 
 	public static File makeItem(String folder, String fn) throws Throwable {
 		String fullFn = null;
@@ -67,9 +82,9 @@ public class ItemsDir {
 	}//()
 
 	/**
-	   ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok'] ,
-	   ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok']
-	*/
+	 * ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok'] ,
+	 * ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok']
+	 */
 	public static String jsList() {
 		//remap
 		List<Map> olist = list();

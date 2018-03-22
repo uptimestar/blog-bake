@@ -1,18 +1,15 @@
 package org.bake.file;
 
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.chain.DefaultChainRouter;
 import org.apache.chain.srv.AbsNRouter;
 import org.apache.chain.srv.ChainPipe;
 import org.info.util.Confd;
 
-
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-
 public class StartSrv {
-	static Confd P = Confd.INSTANCE;
-
 	protected static EventLoopGroup _eg = new NioEventLoopGroup(200);
+	static Confd P = Confd.INSTANCE;
 
 	public static void start() throws Throwable {
 
