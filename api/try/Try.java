@@ -1,4 +1,4 @@
-import org.bake.srv.util.File;
+import org.bake.srv.util.FileItem;
 import org.bake.srv.util.FilesDir;
 import org.info.util.Confd;
 import org.slf4j.Logger;
@@ -13,14 +13,9 @@ public class Try {
 	public static void main(String[] args) throws Throwable{
 		_log.info("starting");
 
-		Optional item = File.read("/blog/one");
+		var files =	FilesDir.fileList("");
 
-		System.out.println(item);
-
-		if(true) return;
-		var items =	FilesDir.fileList("");
-
-		System.out.println(items);
+		System.out.println(files);
 	}
 
 }

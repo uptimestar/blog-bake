@@ -2,7 +2,7 @@ package org.bake.srv.util;
 
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
+import org.bake.srv.StartSrv;
 import org.info.util.Confd;
 import org.json.simple.JSONArray;
 import org.slf4j.Logger;
@@ -13,21 +13,18 @@ import java.util.*;
 
 public class FilesDir {
 
+	public static final String ITEM = "item";
 	static final Confd P = Confd.INSTANCE;
 	private static final Logger _log = LoggerFactory.getLogger(FilesDir.class);
-
-	public static final String ITEM = "item";
-
-
-	public static String[] EXTS = { "info", "pug" };
+	public static String[] EXTS = {"info", "pug"};
 
 	static String PROJ_ROOT;
 
 	static {
 		try {
-			PROJ_ROOT= P.getConf("proj_root");
+			PROJ_ROOT = P.getConf("proj_root");
 		} catch (Throwable e) {
-			_log.error(e.getMessage(),e);
+			_log.error(e.getMessage(), e);
 		}
 	}
 
@@ -37,7 +34,7 @@ public class FilesDir {
 	 * @param basedir
 	 * @return
 	 */
-	public static Collection<String> fileList(final String basedir) throws Throwable {
+	public static Collection<String> fileListStr(final String basedir) throws Throwable {
 
 		String dirName = PROJ_ROOT + basedir;
 
@@ -48,12 +45,12 @@ public class FilesDir {
 
 		try {
 			lst = FileUtils.listFiles(dir, EXTS, true);
-			for(File f: lst) {
-				String path =  f.getPath();
-				path = path.replace('\\','/');
+			for (File f : lst) {
+				String path = f.getPath();
+				path = path.replace('\\', '/');
 				int pos = path.lastIndexOf('/');
-				path = path.substring(0,pos);
-				path = path.replace(PROJ_ROOT,"");
+				path = path.substring(0, pos);
+				path = path.replace(PROJ_ROOT, "");
 				lst2.add(path);
 			}
 		} catch (Throwable e) {
@@ -63,16 +60,50 @@ public class FilesDir {
 		return lst2;
 	}
 
-	protected static Collection<File> listFiles() {
-		Collection<File> lst;
-		File dir = null;
-		try {
-			lst = FileUtils.listFiles(dir, null, true);
-		} catch (Throwable e) {
-			_log.warn(e.toString());
-			return new ArrayList();
+	public static Collection<Map> fileList(final String basedir) throws Throwable {
+
+		Collection<String> fileStrList = fileListStr(basedir);
+		Collection<Map> fileList = new ArrayList();
+		for (String dir : fileStrList) {
+			Optional<Map> infO = FileItem.read(dir);
+			if (infO.isPresent()) {
+				Map info = infO.get();
+				if(info.size()>0)
+				fileList.add(info);
+			}
 		}
-		return lst;
+
+		return fileList;
+	}
+
+	public static String jsList(final String basedir) {
+
+		try {
+			Collection<Map> fileList = fileList(basedir);
+			JSONArray list = new JSONArray();
+			list.addAll(fileList);
+			return list.toJSONString();
+		} catch (Throwable e) {
+			_log.warn(e.getMessage(), e);
+			return StartSrv.ERROR;
+		}
+
+	}
+
+	/**
+	 * ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok'] ,
+	 * ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok']
+	 */
+	public static String jsListByFields() {
+		//remap
+		List<Map> olist = null;
+		List<List> ret = new ArrayList();
+		for (Map row : olist) {
+			ret.add(null);
+		}
+		JSONArray list = new JSONArray();
+		list.addAll(ret);
+		return list.toJSONString();
 	}
 
 	public static File makeItem(String folder, String fn) throws Throwable {
@@ -87,52 +118,5 @@ public class FilesDir {
 		return f;
 	}
 
-	public static List<Map> list() {
-		List<Map> ret = new ArrayList();
-		for (File f : listFiles()) {
-			try {
-				Map row = null;// File.read(f);
-				row.remove("body");
-				row.remove("orig");
-				row.remove("tags");
-				String file = f.toString();
-				file = file.replace(null, "");
-				file = FilenameUtils.removeExtension(file);
-				_log.info(file);
-				row.put(ITEM, file);
-				ret.add(row);
-			} catch (Throwable e) {
-				e.printStackTrace();
-			} //t
-		} //for
-		return ret;
-	}//()
-
-	/**
-	 * ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok'] ,
-	 * ['First post', 'content/blog/2013/second-post', 123, 'post', 'ok']
-	 */
-	public static String jsList() {
-		//remap
-		List<Map> olist = list();
-		List<List> ret = new ArrayList();
-		for (Map row : olist) {
-			ret.add(arow(row));
-		}
-		JSONArray list = new JSONArray();
-		list.addAll(ret);
-		return list.toJSONString();
-	}
-
-	protected static List arow(Map row) {
-		List lst = new ArrayList();
-		lst.add(row.get("title"));
-		lst.add(row.get(ITEM));
-		lst.add(row.get("date"));
-		lst.add(row.get("type"));
-		lst.add(row.get("status"));
-
-		return lst;
-	}
 
 }//class

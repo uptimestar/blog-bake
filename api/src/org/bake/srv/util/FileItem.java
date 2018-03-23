@@ -26,12 +26,12 @@ import java.util.Optional;
  * status=published
  * ~~~~~~
  */
-public class File {
+public class FileItem {
 
 	public static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	static final Confd P = Confd.INSTANCE;
-	private static final Logger LOGGER = LoggerFactory.getLogger(File.class);
-	private static final Logger _log = LoggerFactory.getLogger(File.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileItem.class);
+	private static final Logger _log = LoggerFactory.getLogger(FileItem.class);
 	static String PROJ_ROOT;
 
 	static {
@@ -49,8 +49,8 @@ public class File {
 		Optional<Map> ret = Optional.empty();
 		String meta = PROJ_ROOT + dir + "/meta.info";
 		java.io.File f = new java.io.File(meta);
-		if(!f.exists() ) {
-			_log.warn(meta+ " does not exist.");
+		if (!f.exists()) {
+			_log.info(meta + " does not exist.");
 			return ret;
 		}
 
@@ -58,8 +58,8 @@ public class File {
 
 		if (item.containsKey("date")) {
 			String es = (String) item.get("date");
-			long epoch =  Long.valueOf(es);
-			ZonedDateTime d =  ZonedDateTime.ofInstant(Instant.ofEpochSecond(epoch),  ZoneId.of("UTC"));
+			long epoch = Long.valueOf(es);
+			ZonedDateTime d = ZonedDateTime.ofInstant(Instant.ofEpochSecond(epoch), ZoneId.of("UTC"));
 			item.put("date", d);//as long
 		}
 		if (item.containsKey("tags")) {
