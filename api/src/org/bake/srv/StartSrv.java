@@ -1,4 +1,4 @@
-package org.bake.file;
+package org.bake.srv;
 
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;

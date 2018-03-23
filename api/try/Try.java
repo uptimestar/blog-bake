@@ -1,5 +1,5 @@
-import org.bake.file.util.Item;
-import org.bake.file.util.ItemsDir;
+import org.bake.srv.util.File;
+import org.bake.srv.util.FilesDir;
 import org.info.util.Confd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,12 @@ public class Try {
 	public static void main(String[] args) throws Throwable{
 		_log.info("starting");
 
-		Optional item = Item.read("/blog/one");
+		Optional item = File.read("/blog/one");
 
 		System.out.println(item);
 
 		if(true) return;
-		var items =	ItemsDir.fileList("");
+		var items =	FilesDir.fileList("");
 
 		System.out.println(items);
 	}

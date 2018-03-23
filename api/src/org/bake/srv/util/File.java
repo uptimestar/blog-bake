@@ -1,4 +1,4 @@
-package org.bake.file.util;
+package org.bake.srv.util;
 
 import org.apache.commons.io.FileUtils;
 import org.info.rpc.EMsg;
@@ -7,7 +7,6 @@ import org.info.util.Confd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,12 +26,12 @@ import java.util.Optional;
  * status=published
  * ~~~~~~
  */
-public class Item {
+public class File {
 
 	public static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	static final Confd P = Confd.INSTANCE;
-	private static final Logger LOGGER = LoggerFactory.getLogger(Item.class);
-	private static final Logger _log = LoggerFactory.getLogger(Item.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(File.class);
+	private static final Logger _log = LoggerFactory.getLogger(File.class);
 	static String PROJ_ROOT;
 
 	static {
@@ -44,12 +43,12 @@ public class Item {
 	}
 
 	/**
-	 * Read a meta info file
+	 * Read a meta info srv
 	 */
 	public static Optional<Map> read(String dir) throws Throwable {
 		Optional<Map> ret = Optional.empty();
 		String meta = PROJ_ROOT + dir + "/meta.info";
-		File f = new File(meta);
+		java.io.File f = new java.io.File(meta);
 		if(!f.exists() ) {
 			_log.warn(meta+ " does not exist.");
 			return ret;
@@ -72,7 +71,7 @@ public class Item {
 
 
 	public static String readJs(String path) {
-		File f = new File(path);
+		java.io.File f = new java.io.File(path);
 		Map m;
 		try {
 			m = readX(f);
@@ -84,7 +83,7 @@ public class Item {
 		return J.toJ(m);
 	}
 
-	static Map readX(File f) throws Throwable {
+	static Map readX(java.io.File f) throws Throwable {
 		LOGGER.info(f.toString());
 		String fn = "";
 
@@ -102,7 +101,7 @@ public class Item {
 		return item;
 	}
 
-	public static Map write(File f, Date dat, String title, String type, String tags, String status, String body)
+	public static Map write(java.io.File f, Date dat, String title, String type, String tags, String status, String body)
 		throws Throwable {
 
 		String date = df.format(dat);

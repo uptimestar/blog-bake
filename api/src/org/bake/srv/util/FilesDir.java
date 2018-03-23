@@ -1,4 +1,4 @@
-package org.bake.file.util;
+package org.bake.srv.util;
 
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
-public class ItemsDir {
+public class FilesDir {
 
 	static final Confd P = Confd.INSTANCE;
-	private static final Logger _log = LoggerFactory.getLogger(ItemsDir.class);
+	private static final Logger _log = LoggerFactory.getLogger(FilesDir.class);
 
 	public static final String ITEM = "item";
 
@@ -91,7 +91,7 @@ public class ItemsDir {
 		List<Map> ret = new ArrayList();
 		for (File f : listFiles()) {
 			try {
-				Map row = null;// Item.read(f);
+				Map row = null;// File.read(f);
 				row.remove("body");
 				row.remove("orig");
 				row.remove("tags");

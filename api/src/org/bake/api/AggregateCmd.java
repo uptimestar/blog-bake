@@ -7,18 +7,18 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import org.apache.chain.srv.CCtx;
 import org.apache.chain.srv.ICmd;
-import org.bake.file.util.ItemsDir;
+import org.bake.srv.util.FilesDir;
 import org.info.net.NetU;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ListCmd implements ICmd {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ListCmd.class);
+public class AggregateCmd implements ICmd {
+	private static final Logger LOGGER = LoggerFactory.getLogger(AggregateCmd.class);
 
 	@Override
 	public boolean exec(CCtx ctx) {
 
-		String ret = ItemsDir.jsList();
+		String ret = FilesDir.jsList();
 		LOGGER.info(ret);
 
 		// make a response
