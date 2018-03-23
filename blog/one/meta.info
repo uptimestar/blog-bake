@@ -6,7 +6,8 @@ category =
 status=published
 
 permalink=
-date=2013-08-25
+#Unix time
+date=1521779276
 type=post
 tags=blog
 author=vic
@@ -18,3 +19,5 @@ paginate_path: "/blog/page:num/"
 
 
 teaser_list= /a1, b2
+
+priority

@@ -1,4 +1,4 @@
 
 port = 8081
 
-basedir = blog
+proj_root = /Users/uptim/Documents/GitHub/blog-bake

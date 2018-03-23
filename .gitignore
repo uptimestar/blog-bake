@@ -1,11 +1,13 @@
 
 node_modules/
 **/*lock.json
+/.gradle/
+/build/
 
 dist/
 out/
 workspace.xml
 
-
 **/*.log
 
+bake.jar

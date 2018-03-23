@@ -3,37 +3,64 @@ package org.bake.file.util;
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.info.util.Confd;
 import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ItemsDir {
 
+	static final Confd P = Confd.INSTANCE;
+	private static final Logger _log = LoggerFactory.getLogger(ItemsDir.class);
+
 	public static final String ITEM = "item";
-	private static final Logger LOGGER = LoggerFactory.getLogger(ItemsDir.class);
+
+
+	public static String[] EXTS = { "info", "pug" };
+
+	static String PROJ_ROOT;
+
+	static {
+		try {
+			PROJ_ROOT= P.getConf("proj_root");
+		} catch (Throwable e) {
+			_log.error(e.getMessage(),e);
+		}
+	}
 
 	/**
-	 * Starting w/ root, list recursive dirs that contain both meta.info and index.pug
+	 * Starting w/ root, list recursive dirs that contain meta.info and index.pug
 	 *
 	 * @param basedir
 	 * @return
 	 */
-	public static Collection<File> fileList(String basedir) {
+	public static Collection<String> fileList(final String basedir) throws Throwable {
+
+		String dirName = PROJ_ROOT + basedir;
+
+		File dir = new File(dirName);
+
 		Collection<File> lst;
-		File dir = null;
+		Set<String> lst2 = new HashSet<String>();
+
 		try {
-			lst = FileUtils.listFiles(dir, null, true);
+			lst = FileUtils.listFiles(dir, EXTS, true);
+			for(File f: lst) {
+				String path =  f.getPath();
+				path = path.replace('\\','/');
+				int pos = path.lastIndexOf('/');
+				path = path.substring(0,pos);
+				path = path.replace(PROJ_ROOT,"");
+				lst2.add(path);
+			}
 		} catch (Throwable e) {
-			LOGGER.warn(e.toString());
-			return new ArrayList();
+			_log.warn(e.toString());
+			return new HashSet();
 		}
-		return lst;
+		return lst2;
 	}
 
 	protected static Collection<File> listFiles() {
@@ -42,7 +69,7 @@ public class ItemsDir {
 		try {
 			lst = FileUtils.listFiles(dir, null, true);
 		} catch (Throwable e) {
-			LOGGER.warn(e.toString());
+			_log.warn(e.toString());
 			return new ArrayList();
 		}
 		return lst;
@@ -71,7 +98,7 @@ public class ItemsDir {
 				String file = f.toString();
 				file = file.replace(null, "");
 				file = FilenameUtils.removeExtension(file);
-				LOGGER.info(file);
+				_log.info(file);
 				row.put(ITEM, file);
 				ret.add(row);
 			} catch (Throwable e) {
