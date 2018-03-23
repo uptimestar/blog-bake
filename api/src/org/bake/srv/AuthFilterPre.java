@@ -1,11 +1,11 @@
 package org.bake.srv;
 
-import org.apache.chain.srv.CCtx;
+import java.util.Map;
+
+import org.apache.chain.srv.Ctx;
 import org.apache.chain.srv.ICmd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 public class AuthFilterPre implements ICmd {
 	private final static Logger logger = LoggerFactory.getLogger(AuthFilterPre.class);
@@ -16,7 +16,7 @@ public class AuthFilterPre implements ICmd {
 	 * return true to stop
 	 */
 	@Override
-	public boolean exec(CCtx ctx) {
+	public boolean exec(Ctx ctx) {
 		logger.info("auth");
 		return false;
 	}

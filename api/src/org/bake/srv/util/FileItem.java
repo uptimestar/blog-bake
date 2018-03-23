@@ -1,12 +1,5 @@
 package org.bake.srv.util;
 
-import org.apache.commons.io.FileUtils;
-import org.info.rpc.EMsg;
-import org.info.rpc.J;
-import org.info.util.Confd;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +10,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import org.apache.commons.io.FileUtils;
+import org.info.rpc.EMsg;
+import org.info.rpc.J;
+import org.info.util.Confd;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * title=Second Post
@@ -54,7 +54,7 @@ public class FileItem {
 			return ret;
 		}
 
-		var item = Confd.loadProps(meta);
+		Map item = Confd.loadProps(meta);
 
 		if (item.containsKey("date")) {
 			String es = (String) item.get("date");
@@ -87,7 +87,7 @@ public class FileItem {
 		LOGGER.info(f.toString());
 		String fn = "";
 
-		var item = Confd.loadProps(fn);
+		Map item = Confd.loadProps(fn);
 
 		if (item.containsKey("date")) {
 			Date d = (Date) item.get("date");

@@ -6,6 +6,7 @@ node_modules/
 
 dist/
 out/
+bin/
 workspace.xml
 
 **/*.log
