@@ -13,7 +13,7 @@ public class Try {
 	public static void main(String[] args) throws Throwable{
 		_log.info("starting");
 
-		var files =	FilesDir.fileList("");
+		var files =	FilesDir.jsList("");
 
 		System.out.println(files);
 	}

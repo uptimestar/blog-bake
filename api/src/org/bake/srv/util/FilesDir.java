@@ -28,6 +28,19 @@ public class FilesDir {
 		}
 	}
 
+
+	public static File makeItem(String folder, String fn) throws Throwable {
+		String fullFn = null;
+
+
+		File f = new File(fullFn);
+
+		Files.createParentDirs(f);
+		Files.touch(f);
+
+		return f;
+	}
+
 	/**
 	 * Starting w/ root, list recursive dirs that contain meta.info and index.pug
 	 *
@@ -106,17 +119,7 @@ public class FilesDir {
 		return list.toJSONString();
 	}
 
-	public static File makeItem(String folder, String fn) throws Throwable {
-		String fullFn = null;
 
-
-		File f = new File(fullFn);
-
-		Files.createParentDirs(f);
-		Files.touch(f);
-
-		return f;
-	}
 
 
 }//class

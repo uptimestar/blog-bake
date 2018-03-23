@@ -18,7 +18,7 @@ public class AggregateCmd implements ICmd {
 	@Override
 	public boolean exec(CCtx ctx) {
 
-		String ret = FilesDir.jsList();
+		String ret = FilesDir.jsList("");
 		LOGGER.info(ret);
 
 		// make a response
