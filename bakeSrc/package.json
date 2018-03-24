@@ -1,11 +1,11 @@
 {
   "name": "bake",
   "version": "1.0.0",
-  "description": "Bake a pug",
+  "description": "Bake a pug, including any meta info",
   "main": "index.ts",
   "preferGlobal": true,
   "bin": {
-    "bake": "./index.ts"
+    "nbake": "./index.ts"
   },
   "scripts": {
     "ts-node": "ts-node index.ts",
